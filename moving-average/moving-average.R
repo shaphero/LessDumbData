@@ -2,7 +2,7 @@ library(tidyverse)
 library(zoo)
 
 # Read the data from Github
-df <- read_csv('https://raw.githubusercontent.com/shaphero/LessDumbData/main/sample-traffic-data.csv')
+df <- read_csv('https://raw.githubusercontent.com/shaphero/LessDumbData/main/moving-average/sample-traffic-data.csv')
 
 # Create a new column with the moving average
 
