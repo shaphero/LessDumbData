@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error, mean_squared_error
 
 # Create a pandas dataframe from github csv file
 df = pd.read_csv('https://raw.githubusercontent.com/shaphero/LessDumbData/main/moving-average/sample-traffic-data.csv')
