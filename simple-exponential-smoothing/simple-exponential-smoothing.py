@@ -3,14 +3,14 @@ import pandas as pd
 # Create a pandas dataframe from github csv file
 df = pd.read_csv('https://raw.githubusercontent.com/shaphero/LessDumbData/main/moving-average/sample-traffic-data.csv')
 
-# Create a new column with the moving average
-df['moving_average'] = df['Sessions'].shift(1).rolling(window=3).mean()
+# Create a new column with the simple exponential smoothing calculation
+df['SES'] = df['Sessions'].shift(1).ewm(alpha=0.2, adjust=False).mean()
 
-# Remove NaN rows
-df = df.dropna()
+# Replace NA values with the first value
+df['SES'] = df['SES'].fillna(df['Sessions'].iloc[0])
 
 # Create a new column with the total error
-df['error'] = df['moving_average'] - df['Sessions']
+df['error'] = df['SES'] - df['Sessions']
 
 # Create a new column with the absolute error
 df['abs_error'] = abs(df['error'])
@@ -36,7 +36,6 @@ rel_mae = absolute_mae / df['Sessions'].mean()
 absolute_rmse = df['squared_error'].mean() ** 0.5
 rel_rmse = absolute_rmse / df['Sessions'].mean()
 
-
 # Create a dictionary of the results
 data = {
     'Absolute': {
@@ -58,10 +57,3 @@ df = pd.DataFrame(data)
 
 # Display the dataframe with two decimal places
 print(df.round(2))
-
-
-
-
-
-
-
